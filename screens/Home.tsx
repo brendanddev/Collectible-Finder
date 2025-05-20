@@ -5,12 +5,23 @@
  */
 
 import { SafeAreaView, View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
+
 import homeStyles from '../styles/homeStyles';
 
+type RootTabParamList = {
+    Home: undefined;
+    Map: undefined;
+    Capture: undefined;
+    Collection: undefined;
+};
 
+type HomeScreenProps = {
+    navigation: NativeStackNavigationProp<RootTabParamList, 'Home'>;
+};
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation }: HomeScreenProps) => {
     return (
     <SafeAreaView style={homeStyles.container}>
       <ScrollView contentContainerStyle={homeStyles.scrollContainer}>
