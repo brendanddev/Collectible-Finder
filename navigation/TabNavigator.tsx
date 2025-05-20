@@ -1,0 +1,45 @@
+
+/**
+ * @file TabNavigator.tsx
+ * @author Brendan Dileo, May 2025
+ */
+
+import { SafeAreaView } from "react-native";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
+
+
+import Home from "../screens/Home";
+import Capture from "../screens/Capture";
+import Collection from "../screens/Collection";
+import Map from "../screens/Map";
+
+const Tab = createBottomTabNavigator();
+
+const TabNavigator = () => {
+    return (
+        <NavigationContainer>
+            <Tab.Navigator
+                initialRouteName="Home"
+                screenOptions={{
+                    tabBarStyle: { backgroundColor: 'black' },
+                    tabBarActiveTintColor: 'white',
+                    tabBarInactiveTintColor: 'gray',
+                }}
+            >
+                <Tab.Screen
+                    name="Home"
+                    component={Home}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialIcons name="home" size={size} color={color} />
+                        ),
+                    }}
+                />
+            </Tab.Navigator>
+        </NavigationContainer>
+    );
+};
+
+export default TabNavigator;
