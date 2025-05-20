@@ -37,6 +37,33 @@ const TabNavigator = () => {
                         ),
                     }}
                 />
+                <Tab.Screen
+                    name="Map"
+                    component={Map}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialIcons name="map" size={size} color={color} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="Capture"
+                    component={Capture}
+                    options={{  
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialIcons name="camera-alt" size={size} color={color} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="Collection"
+                    component={Collection}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialIcons name="collections" size={size} color={color} />
+                        ),
+                    }}
+                />
             </Tab.Navigator>
         </NavigationContainer>
     );
