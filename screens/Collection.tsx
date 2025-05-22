@@ -6,7 +6,7 @@
  */
 
 import { View, Text, FlatList, TouchableOpacity, Alert, SafeAreaView, Image, ScrollView, TextInput, } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, JSX } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { LongPressGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -25,7 +25,6 @@ interface Location {
 }
 
 const Collection: React.FC = () => {
-
   const [collection, setCollection] = useState<Photo[]>([]);
   const [visitedShops, setVisitedShops] = useState<Location[]>([]);
   const [favorites, setFavorites] = useState<Location[]>([]);
@@ -84,7 +83,7 @@ const Collection: React.FC = () => {
   };
 
   // Toggles the favorite status of a shop
-  const toggleFavorite = async (location) => {
+  const toggleFavorite = async (location: Location): Promise<void> => {
     let updatedFavorites;
     if (favorites.includes(location)) {
       updatedFavorites = favorites.filter((item) => item !== location);
@@ -95,7 +94,7 @@ const Collection: React.FC = () => {
     await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
 
-  const deletePhoto = async (photoUri) => {
+  const deletePhoto = async (photoUri: string): Promise<void> => {
     if (photoUri) {
       const updatedCollection = collection.filter(
         (item) => item.uri !== photoUri
@@ -109,7 +108,7 @@ const Collection: React.FC = () => {
     }
   };
 
-  const showDeleteAlert = (photoUri) => {
+  const showDeleteAlert = (photoUri: string): void => {
     Alert.alert(
       'Confirm Deletion',
       'Are you sure you want to delete this photo?',
@@ -171,7 +170,7 @@ const Collection: React.FC = () => {
             ]}>
             Capture Collection
           </Text>
-          // If the user has items in their collection, they are displayed with a flat list */}
+
           {collection.length > 0 ? (
             <FlatList
               data={collection}
@@ -238,7 +237,6 @@ const Collection: React.FC = () => {
               color="#888"
               style={collectionStyles.searchIcon}
             />
-            // Updates the search string in state as the user types
             <TextInput
               style={collectionStyles.searchBar}
               placeholderTextColor="gray"
@@ -249,7 +247,6 @@ const Collection: React.FC = () => {
           </View>
 
           <ScrollView style={collectionStyles.scrollableShops}>
-            // Renders the list of shops that match the users search string. If none, default text shown
             {filteredLocations.length > 0 ? (
               filteredLocations.map((item) => renderShop(item))
             ) : (
