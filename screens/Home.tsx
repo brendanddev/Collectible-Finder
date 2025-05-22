@@ -22,6 +22,8 @@ type HomeScreenProps = {
 };
 
 const Home = ({ navigation }: HomeScreenProps) => {
+  // No fonts
+  
     return (
     <SafeAreaView style={homeStyles.container}>
       <ScrollView contentContainerStyle={homeStyles.scrollContainer}>
