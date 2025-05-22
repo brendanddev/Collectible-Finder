@@ -125,8 +125,122 @@ const captureStyles = StyleSheet.create({
     shadowRadius: 4,
     alignItems: "center",
     justifyContent: "center",
-  }
-  
+  },
+
+  saveButton: {
+    backgroundColor: "#65c26b",
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  saveButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "600",
+  },
+
+  deleteButton: {
+    marginLeft: 20,
+    backgroundColor: "#e01d1d",
+    padding: 10,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+  },
+
+  helpButton: {
+    marginTop: 10,
+    backgroundColor: "#70a1b3",
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    borderRadius: 15,
+    elevation: 3,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  galleryButton: {
+    marginTop: 10,
+    backgroundColor: "#70a1b3",
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    borderRadius: 15,
+    elevation: 3,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  backButton: {
+    marginTop: 10,
+    backgroundColor: "#70a1b3",
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    borderRadius: 15,
+    elevation: 3,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  permissionContainer: {
+    flex: 1,
+    marginTop: 20,
+    marginBottom: 20,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f0ebeb",
+    padding: 20,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+  },
+
+  permissionText: {
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    color: '#333',
+    marginBottom: 20,
+  },
+
+  permissionButton: {
+    backgroundColor: "#4fa4ff",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    elevation: 3,
+  },
+
+  permissionButtonText: {
+    color: "white",
+    fontSize: 12,
+    fontWeight: "600",
+  },
 });
 
 export default captureStyles;
