@@ -4,9 +4,10 @@
  * @author Brendan Dileo, May 2025
  */
 
-import { SafeAreaView, View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { SafeAreaView, View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
+import useLoadFonts from "../hooks/loadFonts";
 
 import homeStyles from '../styles/homeStyles';
 
@@ -22,9 +23,13 @@ type HomeScreenProps = {
 };
 
 const Home = ({ navigation }: HomeScreenProps) => {
-  // No fonts
+  const fontsLoaded = useLoadFonts();
   
-    return (
+  if (!fontsLoaded) {
+    return <ActivityIndicator size="large" color="#0000ff" />
+  }
+  
+  return (
     <SafeAreaView style={homeStyles.container}>
       <ScrollView contentContainerStyle={homeStyles.scrollContainer}>
         <View style={homeStyles.header}>

@@ -5,12 +5,13 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { CameraView, useCameraPermissions, CameraCapturedPicture } from 'expo-camera';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import useLoadFonts from '../hooks/loadFonts';
 
 import captureStyles from '../styles/captureStyles';
 
@@ -31,6 +32,11 @@ type PhotoNote = {
 };
 
 const Capture = ({ navigation }: CaptureScreenProps) => {
+  const fontsLoaded = useLoadFonts();
+  if (!fontsLoaded) {
+    return <ActivityIndicator size="large" color="#0000ff" />
+  }
+
   const [photo, setPhoto] = useState<string | null>(null);
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef<CameraView>(null);
@@ -114,7 +120,7 @@ const Capture = ({ navigation }: CaptureScreenProps) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={captureStyles.scrollContainer}>
+    <ScrollView >
       <View style={captureStyles.container}>
         <Text style={[captureStyles.header, { fontFamily: 'Comic Font' }]}>
           Capture A Photo

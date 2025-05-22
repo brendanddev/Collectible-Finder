@@ -4,11 +4,12 @@
  * @author Brendan Dileo, May 2025
  */
 
-import { View, Text, SafeAreaView, Linking, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, Linking, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { JSX, useEffect, useState } from 'react';
 import MapView, { Marker, Callout, Region } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
+import useLoadFonts from '../hooks/loadFonts';
 
 import mapStyles from '../styles/mapStyles';
 import { locations } from '../utils/locations';
@@ -32,6 +33,11 @@ const categoryIcons: Record<string, any> = {
 };
 
 const Map = (): JSX.Element => {
+  const fontsLoaded = useLoadFonts();
+  if (!fontsLoaded) {
+    return <ActivityIndicator size="large" color="#0000ff" />
+  }
+
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [region, setRegion] = useState<Region | null>(null);
   const [filteredMarkers, setFilteredMarkers] = useState<ShopLocation[]>(locations);

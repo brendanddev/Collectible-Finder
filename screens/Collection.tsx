@@ -5,11 +5,12 @@
  * Collection screen for the app
  */
 
-import { View, Text, FlatList, TouchableOpacity, Alert, SafeAreaView, Image, ScrollView, TextInput, } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Alert, SafeAreaView, Image, ScrollView, TextInput, ActivityIndicator } from 'react-native';
 import { useState, useEffect, JSX } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { LongPressGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler';
+import useLoadFonts from '../hooks/loadFonts';
 
 import { locations } from '../utils/locations';
 import collectionStyles from '../styles/collectionStyles';
@@ -25,6 +26,11 @@ interface Location {
 }
 
 const Collection: React.FC = () => {
+  const fontsLoaded = useLoadFonts();
+  if (!fontsLoaded) {
+    return <ActivityIndicator size="large" color="#0000ff" />
+  }
+
   const [collection, setCollection] = useState<Photo[]>([]);
   const [visitedShops, setVisitedShops] = useState<Location[]>([]);
   const [favorites, setFavorites] = useState<Location[]>([]);
