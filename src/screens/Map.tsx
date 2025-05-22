@@ -1,9 +1,9 @@
-
 /**
  * @file Map.tsx
  * @author Brendan Dileo, May 2025
  */
 
+import React from 'react';
 import { View, Text, SafeAreaView, Linking, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { JSX, useEffect, useState } from 'react';
 import MapView, { Marker, Callout, Region } from 'react-native-maps';
