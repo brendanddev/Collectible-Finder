@@ -5,13 +5,28 @@
  */
 
 import express from 'express';
+import cors from 'cors';
 
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 
-app.get('/', (_req, res) => {
-  res.send('Hello!');
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Register route
+app.post('/register', (req, res) => {
+  const { email, password } = req.body;
 });
+
+// Login route
+app.post('/login', (req, res) => {
+});
+
+// Logout route
+app.post('/logout', (req, res) => {
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
