@@ -49,22 +49,30 @@ export async function requestNotificationPermissions(): Promise<string | undefin
     }
 
     if (Platform.OS === 'android') {
-
         await Notifications.setNotificationChannelAsync('default', {
             name: 'default',
             importance: Notifications.AndroidImportance.DEFAULT,
             sound: 'default',
         });
     }
-
     return expoPushToken;
 }
 
 // Send basic noti 
 export async function sendTestNotification(): Promise<void> {
-    // Steps to sending a notification
-    // Ensure permissions are granted
-    // Create a notification content object
-    // Trigger the notification
-    // Handle any errors
+    try {
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'Test Notification',
+                body: 'This is a test notification sent locally!',
+                sound: 'default',
+            },
+            trigger: {
+                seconds: 2,
+                repeats: false,
+            },
+        });
+    } catch (error) {
+        console.error('Error sending notification:', error);
+    }
 }
