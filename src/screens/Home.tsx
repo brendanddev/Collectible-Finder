@@ -3,29 +3,15 @@
  * @author Brendan Dileo, May 2025
  */
 
+import React, { useEffect } from 'react';
 import { SafeAreaView, View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { sendTestNotification, requestNotificationPermissions } from '../utils/notifications';
+import { HomeScreenProps } from '../types/types';
 import { Ionicons } from '@expo/vector-icons';
 import useLoadFonts from "../hooks/loadFonts";
-
 import homeStyles from '../styles/homeStyles';
 
-import { sendTestNotification, requestNotificationPermissions } from '../utils/notifications';
-import React, { useEffect } from 'react';
-
-type RootTabParamList = {
-    Home: undefined;
-    Map: undefined;
-    Capture: undefined;
-    Collection: undefined;
-};
-
-type HomeScreenProps = {
-    navigation: NativeStackNavigationProp<RootTabParamList, 'Home'>;
-};
-
 const Home = ({ navigation }: HomeScreenProps) => {
-
   useEffect(() => {
     const requestPermissions = async () => {
       const granted = await requestNotificationPermissions();
@@ -35,17 +21,12 @@ const Home = ({ navigation }: HomeScreenProps) => {
         console.log("Notification permissions denied");
       }
     };
-
     requestPermissions();
   }, []);
 
-
   const fontsLoaded = useLoadFonts();
-  
-  if (!fontsLoaded) {
-    return <ActivityIndicator size="large" color="#0000ff" />
-  }
-  
+  if (!fontsLoaded) return <ActivityIndicator size="large" color="#0000ff" />
+
   return (
     <SafeAreaView style={homeStyles.container}>
       <ScrollView contentContainerStyle={homeStyles.scrollContainer}>

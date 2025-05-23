@@ -5,23 +5,14 @@
 
 import React from 'react';
 import { View, Text, SafeAreaView, Linking, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { JSX, useEffect, useState } from 'react';
 import MapView, { Marker, Callout, Region } from 'react-native-maps';
-import * as Location from 'expo-location';
+import { JSX, useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import useLoadFonts from '../hooks/loadFonts';
-
-import mapStyles from '../styles/mapStyles';
+import { ShopLocation } from '../types/types';
 import { locations } from '../utils/locations';
-
-interface ShopLocation {
-  NAME: string;
-  CATEGORY: string;
-  LATITUDE: number;
-  LONGITUDE: number;
-  COMMENTS: string;
-  WEBSITE: string;
-}
+import * as Location from 'expo-location';
+import useLoadFonts from '../hooks/loadFonts';
+import mapStyles from '../styles/mapStyles';
 
 const categoryIcons: Record<string, any> = {
   'Comic Shop': require('../assets/images/comic.png'),
@@ -34,9 +25,7 @@ const categoryIcons: Record<string, any> = {
 
 const Map = (): JSX.Element => {
   const fontsLoaded = useLoadFonts();
-  if (!fontsLoaded) {
-    return <ActivityIndicator size="large" color="#0000ff" />
-  }
+  if (!fontsLoaded) return <ActivityIndicator size="large" color="#0000ff" />
 
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [region, setRegion] = useState<Region | null>(null);
@@ -70,6 +59,7 @@ const Map = (): JSX.Element => {
     getLocation();
   }, []);
 
+  // TODO: Add button to zoom to the user's location
   const zoomToLocation = (): void => {
     if (location) {
       setRegion((prevRegion) =>
