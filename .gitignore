@@ -1,4 +1,11 @@
 
+# Local Sqlite db and log
+dev.db
+dev.db-journal
+
+# Primsa generated files
+generated/
+
 # Environment variables
 .env
 
