@@ -7,7 +7,7 @@ import express from 'express';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 const prisma = new PrismaClient();
 
 // Setup express server
@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 // Register route
-app.post('/register', async (req:, res) => {      // Throws error????
+app.post('/register', async (req: Request, res: Response) => {  
   const { email, password } = req.body;
 
   if (!email || !password) 
