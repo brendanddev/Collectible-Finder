@@ -67,15 +67,6 @@ const Home = ({ navigation }: HomeScreenProps) => {
           </Text>
         </View>
 
-        <TouchableOpacity
-          onPress={sendTestNotification}
-          style={homeStyles.mainButton}>
-          <Text style={[homeStyles.buttonText, { fontFamily: 'Comic Font 3', fontSize: 20 }]}>
-            Test Notification
-          </Text>
-        </TouchableOpacity>
-
-
         <View style={homeStyles.buttonContainer}>
           <TouchableOpacity
             onPress={() => navigation.navigate('Collection')}
