@@ -6,30 +6,18 @@
  */
 
 import { View, Text, FlatList, TouchableOpacity, Alert, SafeAreaView, Image, ScrollView, TextInput, ActivityIndicator } from 'react-native';
-import { useState, useEffect, JSX } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Ionicons } from '@expo/vector-icons';
 import { LongPressGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler';
-import useLoadFonts from '../hooks/loadFonts';
-
+import { useState, useEffect, JSX } from 'react';
 import { locations } from '../utils/locations';
+import { Ionicons } from '@expo/vector-icons';
+import { Photo, Location } from '../types/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import useLoadFonts from '../hooks/loadFonts';
 import collectionStyles from '../styles/collectionStyles';
-
-interface Photo {
-  uri: string;
-  [key: string]: any;
-}
-
-interface Location {
-  NAME: string;
-  [key: string]: any;
-}
 
 const Collection: React.FC = () => {
   const fontsLoaded = useLoadFonts();
-  if (!fontsLoaded) {
-    return <ActivityIndicator size="large" color="#0000ff" />
-  }
+  if (!fontsLoaded) return <ActivityIndicator size="large" color="#0000ff" />
 
   const [collection, setCollection] = useState<Photo[]>([]);
   const [visitedShops, setVisitedShops] = useState<Location[]>([]);

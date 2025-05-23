@@ -7,35 +7,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { CameraView, useCameraPermissions, CameraCapturedPicture } from 'expo-camera';
+import { CaptureScreenProps, PhotoNote } from '../types/types';
+import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
-import { Ionicons } from '@expo/vector-icons';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useLoadFonts from '../hooks/loadFonts';
-
 import captureStyles from '../styles/captureStyles';
-
-type RootTabParamList = {
-  Home: undefined;
-  Map: undefined;
-  Capture: undefined;
-  Collection: undefined;
-};
-
-type CaptureScreenProps = {
-  navigation: NativeStackNavigationProp<RootTabParamList, 'Capture'>;
-};
-
-type PhotoNote = {
-  uri: string;
-  note: string;
-};
 
 const Capture = ({ navigation }: CaptureScreenProps) => {
   const fontsLoaded = useLoadFonts();
-  if (!fontsLoaded) {
-    return <ActivityIndicator size="large" color="#0000ff" />
-  }
+  if (!fontsLoaded) return <ActivityIndicator size="large" color="#0000ff" />
 
   const [photo, setPhoto] = useState<string | null>(null);
   const [permission, requestPermission] = useCameraPermissions();
