@@ -1,5 +1,7 @@
 # Collectible-Finder
+This project initially began as a passion project built with React Native and Expo SDK. 
 
+## Features
 
 
 ### Assets and Attribution
