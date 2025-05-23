@@ -4,15 +4,7 @@
  * @author Brendan Dileo, May 2025
  */
 
-
-export interface Location {
-    LATITUDE: number;
-    LONGITUDE: number;
-    NAME: string;
-    CATEGORY: string;
-    WEBSITE: string;
-    COMMENTS: string;
-}
+import { Location } from "../types/types";
 
 export const locations: Location[] = [
     {
