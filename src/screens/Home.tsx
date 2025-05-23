@@ -10,6 +10,9 @@ import useLoadFonts from "../hooks/loadFonts";
 
 import homeStyles from '../styles/homeStyles';
 
+import { sendTestNotification, requestNotificationPermissions } from '../utils/notifications';
+import React, { useEffect } from 'react';
+
 type RootTabParamList = {
     Home: undefined;
     Map: undefined;
@@ -22,6 +25,21 @@ type HomeScreenProps = {
 };
 
 const Home = ({ navigation }: HomeScreenProps) => {
+
+  useEffect(() => {
+    const requestPermissions = async () => {
+      const granted = await requestNotificationPermissions();
+      if (granted) {
+        console.log("Notification permissions granted");
+      } else {
+        console.log("Notification permissions denied");
+      }
+    };
+
+    requestPermissions();
+  }, []);
+
+
   const fontsLoaded = useLoadFonts();
   
   if (!fontsLoaded) {
@@ -48,6 +66,15 @@ const Home = ({ navigation }: HomeScreenProps) => {
             with ease.
           </Text>
         </View>
+
+        <TouchableOpacity
+          onPress={sendTestNotification}
+          style={homeStyles.mainButton}>
+          <Text style={[homeStyles.buttonText, { fontFamily: 'Comic Font 3', fontSize: 20 }]}>
+            Test Notification
+          </Text>
+        </TouchableOpacity>
+
 
         <View style={homeStyles.buttonContainer}>
           <TouchableOpacity
