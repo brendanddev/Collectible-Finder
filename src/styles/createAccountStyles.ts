@@ -64,6 +64,11 @@ const createAccountStyles = StyleSheet.create({
         shadowRadius: 4,
     },
 
+    buttonDisabled: {
+        backgroundColor: '#666',
+        opacity: 0.7,
+    },
+
     buttonText: {
         color: '#fff',
         fontSize: 16,
@@ -74,6 +79,13 @@ const createAccountStyles = StyleSheet.create({
         color: '#007bff',
         fontSize: 14,
         textAlign: 'center',
+    },
+
+    errorText: {
+        color: '#e01d1d',
+        fontSize: 14,
+        textAlign: 'center',
+        marginBottom: 16,
     }
 });
 

@@ -5,24 +5,31 @@
  * The login screen conditionally rendered for the app
  */
 
-import { SafeAreaView, View, ScrollView, Text, TouchableOpacity, Alert, TextInput } from "react-native"
+import { SafeAreaView, View, ScrollView, Text, TouchableOpacity, Alert, TextInput, ActivityIndicator } from "react-native"
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import loginStyles from "../styles/loginStyles"
 
-
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
+    const { login, error, setError } = useAuth();
 
     const handleLogin = async () => {
-        if (!email || !password) return Alert.alert("Error", "All fields are required!");
+        if (!email || !password) {
+            setError("All fields are required!");
+            return;
+        }
 
         try {
+            setIsLoading(true);
+            setError(null);
             await login(email, password);
-        } catch (error) {
-            Alert.alert("Login Failed", "Invalid email or password!");
+        } catch (error: any) {
+            console.error('Login error:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -31,25 +38,45 @@ const Login = () => {
             <View style={loginStyles.card}>
                 <Text style={loginStyles.title}>Login</Text>
 
+                {error && (
+                    <Text style={loginStyles.errorText}>{error}</Text>
+                )}
+
                 <TextInput
-                placeholder="Email"
-                style={loginStyles.input}
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
+                    placeholder="Email"
+                    style={loginStyles.input}
+                    value={email}
+                    onChangeText={(text) => {
+                        setEmail(text);
+                        setError(null);
+                    }}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    editable={!isLoading}
                 />
 
                 <TextInput
-                placeholder="Password"
-                style={loginStyles.input}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
+                    placeholder="Password"
+                    style={loginStyles.input}
+                    value={password}
+                    onChangeText={(text) => {
+                        setPassword(text);
+                        setError(null);
+                    }}
+                    secureTextEntry
+                    editable={!isLoading}
                 />
 
-                <TouchableOpacity style={loginStyles.button} onPress={handleLogin}>
-                <Text style={loginStyles.buttonText}>Login</Text>
+                <TouchableOpacity 
+                    style={[loginStyles.button, isLoading && loginStyles.buttonDisabled]} 
+                    onPress={handleLogin}
+                    disabled={isLoading}
+                >
+                    {isLoading ? (
+                        <ActivityIndicator color="white" />
+                    ) : (
+                        <Text style={loginStyles.buttonText}>Login</Text>
+                    )}
                 </TouchableOpacity>
 
                 <TouchableOpacity>

@@ -60,6 +60,11 @@ const loginStyles = StyleSheet.create({
     elevation: 3,
   },
 
+  buttonDisabled: {
+    backgroundColor: '#666',
+    opacity: 0.7,
+  },
+
   buttonText: {
     color: '#fff',
     fontSize: 16,
@@ -71,6 +76,13 @@ const loginStyles = StyleSheet.create({
     color: '#007bff',
     fontSize: 15,
     marginTop: 12,
+  },
+
+  errorText: {
+    color: '#e01d1d',
+    fontSize: 14,
+    textAlign: 'center',
+    marginBottom: 16,
   },
 });
 
