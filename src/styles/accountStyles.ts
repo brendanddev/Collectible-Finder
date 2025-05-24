@@ -122,6 +122,15 @@ const accountStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  switchAuthButton: {
+    padding: 15,
+    alignItems: 'center',
+  },
+  switchAuthText: {
+    color: '#007AFF',
+    fontSize: 16,
+    textDecorationLine: 'underline',
+  },
 });
 
 export default accountStyles; 
