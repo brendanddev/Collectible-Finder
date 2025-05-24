@@ -158,7 +158,6 @@ app.post('/logout', (req, res) => {
 });
 
 import { Request, Response } from 'express';
-import { File } from 'multer';
 
 // Upload profile picture route
 const uploadHandler = async (
