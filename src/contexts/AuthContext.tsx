@@ -9,11 +9,13 @@ import { createContext, useState, useEffect, useContext } from 'react';
 import { AuthContextType, AuthProviderProps } from '../types/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../utils/api';
+import { UserData } from '../types/types';
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [userToken, setUserToken] = useState<string | null>(null);
+    const [user, setUser] = useState<UserData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -40,11 +42,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         try {
             setError(null);
             const response = await api.post('/login', { email, password });
-            const { token } = response.data;
+            const { token, user } = response.data;
 
-            if (token) {
+            if (token && user) {
                 await AsyncStorage.setItem('token', token);
                 setUserToken(token);
+                setUser(user);
             }
         } catch (error: any) {
             const errorMessage = error.response?.data?.error || 'Login failed';
@@ -81,9 +84,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     useEffect(() => {
         loadToken();
     }, []);
-
     return (
-        <AuthContext.Provider value={{ userToken, login, logout, register, loading, error, setError }}>
+        <AuthContext.Provider value={{ userToken, user, setUser, login, logout, register, loading, error, setError }}>
             {children}
         </AuthContext.Provider>
     );

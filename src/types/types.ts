@@ -58,8 +58,17 @@ export interface ShopLocation {
   WEBSITE: string;
 }
 
+export type UserData = {
+    id: string;
+    name: string;
+    username: string;
+    email: string;
+};
+
 export type AuthContextType = {
     userToken: string | null;
+    user: UserData | null;
+    setUser: (user: UserData | null) => void;
     login: (email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
     register: (name: string, username: string, email: string, password: string) => Promise<void>;
@@ -71,5 +80,3 @@ export type AuthContextType = {
 export type AuthProviderProps = {
     children: React.ReactNode;
 };
-
-
