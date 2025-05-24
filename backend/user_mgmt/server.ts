@@ -157,27 +157,63 @@ app.post('/login', loginHandler);
 app.post('/logout', (req, res) => {
 });
 
+import { Request, Response } from 'express';
+import { File } from 'multer';
+
 // Upload profile picture route
-const uploadHandler: RequestHandler = async (req, res) => {
+const uploadHandler = async (
+  req: Request<{ userId: string }, any, any>,
+  res: Response
+) => {
   const userId = parseInt(req.params.userId, 10);
-  if (!req.file) {
+
+  const file = req.file as Express.Multer.File;
+  if (!file) {
     res.status(400).json({ error: 'No file uploaded!' });
     return;
   }
-  
+
   try {
     const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
-        profilePicture: `/uploads/${req.file.filename}`,
+        profilePicture: `/uploads/${file.filename}`,
       },
     });
+
     res.status(200).json({ message: 'Profile picture uploaded successfully!' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to update user profile picture' });
   }
-}
+};
+
+
+// const uploadHandler: RequestHandler = async (req, res) => {
+//   const userId = parseInt(req.params.userId, 10);
+//   if (!req.file) {
+//     res.status(400).json({ error: 'No file uploaded!' });
+//     return;
+//   }
+
+//   try {
+//     const updatedUser = await prisma.user.update({
+//       where: { id: userId },
+//       data: {
+//         profilePicture: `/uploads/${req.file.filename}`,
+//       },
+//     });
+//     res.status(200).json({ message: 'Profile picture uploaded successfully!' });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Failed to update user profile picture' });
+//   }
+// }
+app.post(
+  '/upload-profile-picture/:userId', 
+  upload.single('profilePicture'), 
+  uploadHandler
+);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
