@@ -2,32 +2,55 @@
 /**
  * @file Account.tsx
  * @author Brendan Dileo, May 2025
+ * The account screen for the app.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../contexts/AuthContext';
 import useLoadFonts from '../hooks/loadFonts';
 import accountStyles from '../styles/accountStyles';
+import Login from './Login';
+import CreateAccount from './CreateAccount';
 
 const Account = () => {
   const fontsLoaded = useLoadFonts();
   const { userToken, logout } = useAuth();
+  const [showLogin, setShowLogin] = useState(true);
 
   if (!fontsLoaded) return <ActivityIndicator size="large" color="#0000ff" />
 
+  // If not logged in, show either Login or CreateAccount
   if (!userToken) {
     return (
       <SafeAreaView style={accountStyles.container}>
-        <ScrollView contentContainerStyle={accountStyles.scrollContainer}>
-          <Text style={[accountStyles.header, { fontFamily: 'Comic Font' }]}>
-            Please log in to view your account.
-          </Text>
-        </ScrollView>
+        {showLogin ? (
+          <>
+            <Login />
+            <TouchableOpacity 
+              style={accountStyles.switchAuthButton}
+              onPress={() => setShowLogin(false)}
+            >
+              <Text style={accountStyles.switchAuthText}>Don't have an account? Sign up</Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            <CreateAccount />
+            <TouchableOpacity 
+              style={accountStyles.switchAuthButton}
+              onPress={() => setShowLogin(true)}
+            >
+              <Text style={accountStyles.switchAuthText}>Already have an account? Log in</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </SafeAreaView>
     );
   }
+
+  // If logged in, show the account content
   return (
     <SafeAreaView style={accountStyles.container}>
       <ScrollView contentContainerStyle={accountStyles.scrollContainer}>
@@ -89,7 +112,10 @@ const Account = () => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={accountStyles.logoutButton}>
+        <TouchableOpacity 
+          style={accountStyles.logoutButton}
+          onPress={logout}
+        >
           <Text style={accountStyles.logoutText}>Log Out</Text>
         </TouchableOpacity>
       </ScrollView>
