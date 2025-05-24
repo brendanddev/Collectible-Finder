@@ -40,10 +40,21 @@ const accountStyles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 10,
   },
+  name: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#242b3b',
+    marginBottom: 5,
+  },
   username: {
     fontSize: 24,
     fontWeight: '600',
     color: '#242b3b',
+  },
+  email: {
+    fontSize: 16,
+    color: '#666',
+    marginTop: 5,
   },
   statsSection: {
     backgroundColor: '#FFF',

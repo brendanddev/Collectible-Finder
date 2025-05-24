@@ -16,7 +16,7 @@ import CreateAccount from './CreateAccount';
 
 const Account = () => {
   const fontsLoaded = useLoadFonts();
-  const { userToken, logout } = useAuth();
+  const { userToken, logout, user } = useAuth();
   const [showLogin, setShowLogin] = useState(true);
 
   if (!fontsLoaded) return <ActivityIndicator size="large" color="#0000ff" />
@@ -63,8 +63,14 @@ const Account = () => {
             source={require('../assets/images/user.png')}
             style={accountStyles.profileImage}
           />
+          <Text style={[accountStyles.name, { fontFamily: 'Comic Font 2' }]}>
+            {user?.name ?? 'Collector Name'}
+          </Text>
           <Text style={[accountStyles.username, { fontFamily: 'Comic Font 2' }]}>
-            Collector Name
+            {user?.username ?? ''}
+          </Text>
+          <Text style={[accountStyles.email, { fontFamily: 'Comic Font 2' }]}>
+            {user?.email ?? ''}
           </Text>
         </View>
 

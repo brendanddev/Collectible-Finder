@@ -10,6 +10,9 @@ import cors from 'cors';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 import { PrismaClient } from '@prisma/client';
 import { RequestHandler } from 'express';
 dotenv.config();
@@ -21,6 +24,21 @@ const PORT = 3001;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Uploads dir
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+
+// Storage engine
+const storage = multer.diskStorage({
+});
+
+
+
+
+
+
+
 
 // Register route
 const registerHandler: RequestHandler = async (req, res) => {
@@ -116,7 +134,16 @@ const loginHandler: RequestHandler = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.status(200).json({ message: 'Login successful.', token });
+    res.status(200).json({ 
+      message: 'Login successful.', 
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        username: user.username,
+        email: user.email
+      }
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
