@@ -11,6 +11,8 @@ import { useAuth } from '../contexts/AuthContext';
 import createAccountStyles from "../styles/createAccountStyles";
 
 const CreateAccount = () => {
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -18,7 +20,7 @@ const CreateAccount = () => {
     const { register, error, setError } = useAuth();
 
     const handleCreateAccount = async () => {
-        if (!email || !password || !confirmPassword) {
+        if (!name || !username || !email || !password || !confirmPassword) {
             setError("All fields are required!");
             return;
         }
@@ -31,7 +33,7 @@ const CreateAccount = () => {
         try {
             setIsLoading(true);
             setError(null);
-            await register(email, password);
+            await register(name, username, email, password);
         } catch (error: any) {
             // Error already set in context
             console.error('Registration error:', error);
@@ -48,6 +50,29 @@ const CreateAccount = () => {
                 {error && (
                     <Text style={createAccountStyles.errorText}>{error}</Text>
                 )}
+
+                <TextInput
+                    placeholder="Full Name"
+                    style={createAccountStyles.input}
+                    value={name}
+                    onChangeText={(text) => {
+                        setName(text);
+                        setError(null);
+                    }}
+                    editable={!isLoading}
+                />
+
+                <TextInput
+                    placeholder="Username"
+                    style={createAccountStyles.input}
+                    value={username}
+                    onChangeText={(text) => {
+                        setUsername(text);
+                        setError(null);
+                    }}
+                    autoCapitalize="none"
+                    editable={!isLoading}
+                />
 
                 <TextInput
                     placeholder="Email"
