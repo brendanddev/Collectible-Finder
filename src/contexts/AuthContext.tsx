@@ -5,7 +5,7 @@
  * Context for managing authentication state and user data.
  */
 
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import { AuthContextType, AuthProviderProps } from '../types/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../utils/api';
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 };
 
 export const useAuth = () => {
-    const context = AuthContext;
+    const context = useContext(AuthContext);
     if (!context) throw new Error('useAuth must be used within an AuthProvider');
     return context;
 };
