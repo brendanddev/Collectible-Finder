@@ -58,3 +58,11 @@ export interface ShopLocation {
   WEBSITE: string;
 }
 
+export type AuthContextType = {
+    userToken: string | null;
+    login: (email: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
+    loading: boolean;
+};
+
+
