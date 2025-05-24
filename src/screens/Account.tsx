@@ -7,13 +7,27 @@
 import React from 'react';
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from '../contexts/AuthContext';
 import useLoadFonts from '../hooks/loadFonts';
 import accountStyles from '../styles/accountStyles';
 
 const Account = () => {
   const fontsLoaded = useLoadFonts();
+  const { userToken, logout } = useAuth();
+
   if (!fontsLoaded) return <ActivityIndicator size="large" color="#0000ff" />
 
+  if (!userToken) {
+    return (
+      <SafeAreaView style={accountStyles.container}>
+        <ScrollView contentContainerStyle={accountStyles.scrollContainer}>
+          <Text style={[accountStyles.header, { fontFamily: 'Comic Font' }]}>
+            Please log in to view your account.
+          </Text>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
   return (
     <SafeAreaView style={accountStyles.container}>
       <ScrollView contentContainerStyle={accountStyles.scrollContainer}>
