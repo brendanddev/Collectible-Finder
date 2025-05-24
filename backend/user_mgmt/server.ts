@@ -9,7 +9,7 @@ import cors from 'cors';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '../user_mgmt/generated/prisma';
+import { PrismaClient } from '@prisma/client';
 import { RequestHandler } from 'express';
 dotenv.config();
 const prisma = new PrismaClient();
@@ -23,10 +23,10 @@ app.use(express.json());
 
 // Register route
 const registerHandler: RequestHandler = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, username, email, password } = req.body;
 
-  if (!email || !password) {
-    res.status(400).json({ error: 'Email and password are required to register.' });
+  if (!name || !username || !email || !password) {
+    res.status(400).json({ error: 'The following fields are required: email, password, name, username' });
     return;
   }
 
@@ -44,8 +44,10 @@ const registerHandler: RequestHandler = async (req, res) => {
     // Create new user
     const user = await prisma.user.create({
       data: {
+        name,
+        username,
         email,
-        password: hashedPassword,
+        password: hashedPassword
       },
     });
 
