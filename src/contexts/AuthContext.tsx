@@ -15,10 +15,30 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [userToken, setUserToken] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    // Registration logic
+    const register = async (email: string, password: string) => {
+        try {
+            setError(null);
+            const response = await api.post('/register', { email, password });
+            const { userId } = response.data;
+            
+            if (userId) {
+                // After successful registration, automatically log in
+                await login(email, password);
+            }
+        } catch (error: any) {
+            const errorMessage = error.response?.data?.error || 'Registration failed';
+            setError(errorMessage);
+            throw new Error(errorMessage);
+        }
+    };
 
     // Login logic
     const login = async (email: string, password: string) => {
         try {
+            setError(null);
             const response = await api.post('/login', { email, password });
             const { token } = response.data;
 
@@ -26,18 +46,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 await AsyncStorage.setItem('token', token);
                 setUserToken(token);
             }
-        } catch (error) {
-            console.error('Login error:', error);
+        } catch (error: any) {
+            const errorMessage = error.response?.data?.error || 'Login failed';
+            setError(errorMessage);
+            throw new Error(errorMessage);
         }
     };
 
     // Logout logic
     const logout = async () => {
         try {
+            setError(null);
             await AsyncStorage.removeItem('token');
             setUserToken(null);
-        } catch (error) {
-            console.error('Logout error:', error);
+        } catch (error: any) {
+            const errorMessage = 'Logout failed';
+            setError(errorMessage);
+            throw new Error(errorMessage);
         }
     };
 
@@ -58,7 +83,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ userToken, login, logout, loading }}>
+        <AuthContext.Provider value={{ userToken, login, logout, register, loading, error, setError }}>
             {children}
         </AuthContext.Provider>
     );
