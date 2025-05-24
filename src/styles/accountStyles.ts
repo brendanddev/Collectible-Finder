@@ -142,6 +142,14 @@ const accountStyles = StyleSheet.create({
     fontSize: 16,
     textDecorationLine: 'underline',
   },
+  changeProfPictureButton: {
+  marginTop: 10,
+  paddingVertical: 8,
+  paddingHorizontal: 16,
+  borderRadius: 8,
+  backgroundColor: 'black',
+  alignSelf: 'center',
+},
 });
 
 export default accountStyles; 

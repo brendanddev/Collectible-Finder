@@ -14,6 +14,8 @@ import accountStyles from '../styles/accountStyles';
 import Login from './Login';
 import CreateAccount from './CreateAccount';
 import { config } from '../config';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 const Account = () => {
   const fontsLoaded = useLoadFonts();
@@ -69,6 +71,12 @@ const Account = () => {
             }
             style={accountStyles.profileImage}
           />
+
+          <TouchableOpacity
+            style={accountStyles.changeProfPictureButton}
+          >
+            <Ionicons name="camera" size={20} color="#fff" />
+          </TouchableOpacity>
 
           <Text style={[accountStyles.name, { fontFamily: 'Comic Font 2' }]}>
             {user?.name ?? 'Collector Name'}
