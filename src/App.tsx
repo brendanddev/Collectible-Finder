@@ -8,10 +8,12 @@
 import { AuthProvider } from './contexts/AuthContext';
 import TabNavigator from './navigation/TabNavigator';
 
+import Login from './screens/Login';
+
 export default function App() {
   return (
     <AuthProvider>
-      <TabNavigator />
+      <Login />
     </AuthProvider>
   );
 }

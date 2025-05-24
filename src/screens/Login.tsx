@@ -26,33 +26,36 @@ const Login = () => {
         }
     };
 
-
     return (
-        <SafeAreaView>
-            <Text>Login</Text>
+       <SafeAreaView style={loginStyles.container}>
+            <View style={loginStyles.card}>
+                <Text style={loginStyles.title}>Login</Text>
 
-            <TextInput
+                <TextInput
                 placeholder="Email"
+                style={loginStyles.input}
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
                 autoCapitalize="none"
-            />
+                />
 
-            <TextInput
+                <TextInput
                 placeholder="Password"
+                style={loginStyles.input}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
-            />
+                />
 
-            <TouchableOpacity onPress={handleLogin}>
-                <Text>Login</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={loginStyles.button} onPress={handleLogin}>
+                <Text style={loginStyles.buttonText}>Login</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity>
-                <Text>Don't Have an Account? Create one!</Text>
-            </TouchableOpacity>
+                <TouchableOpacity>
+                <Text style={loginStyles.linkText}>Don't have an account? Create one!</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 };
