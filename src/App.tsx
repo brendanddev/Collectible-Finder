@@ -9,11 +9,12 @@ import { AuthProvider } from './contexts/AuthContext';
 import TabNavigator from './navigation/TabNavigator';
 
 import Login from './screens/Login';
+import CreateAccount from './screens/CreateAccount';
 
 export default function App() {
   return (
     <AuthProvider>
-      <Login />
+      <CreateAccount />
     </AuthProvider>
   );
 }

@@ -7,6 +7,7 @@
 
 import { SafeAreaView, Text, TextInput, View, TouchableOpacity, Alert } from 'react-native'
 import { useState } from 'react';
+import api from '../utils/api';
 import createAccountStyles from "../styles/createAccountStyles";
 
 const CreateAccount = () => {
@@ -18,36 +19,43 @@ const CreateAccount = () => {
     };
 
     return (
-        <SafeAreaView>
-            <Text>Create Account</Text>
+       <SafeAreaView style={createAccountStyles.container}>
+            <View style={createAccountStyles.card}>
+                <Text style={createAccountStyles.title}>Create Account</Text>
 
-            <TextInput
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-            />
-            <TextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            <TextInput
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                secureTextEntry
-            />
+                <TextInput
+                    placeholder="Email"
+                    style={createAccountStyles.input}
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                />
 
-            <TouchableOpacity onPress={handleCreateAccount}>
-                <Text>Sign Up</Text>
-            </TouchableOpacity>
+                <TextInput
+                    placeholder="Password"
+                    style={createAccountStyles.input}
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                />
 
-            <TouchableOpacity>
-                <Text>Already have an account? Log in</Text>
-            </TouchableOpacity>
+                <TextInput
+                    placeholder="Confirm Password"
+                    style={createAccountStyles.input}
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                    secureTextEntry
+                />
+
+                <TouchableOpacity style={createAccountStyles.button} onPress={handleCreateAccount}>
+                    <Text style={createAccountStyles.buttonText}>Sign Up</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                    <Text style={createAccountStyles.linkText}>Already have an account? Log in</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 }
