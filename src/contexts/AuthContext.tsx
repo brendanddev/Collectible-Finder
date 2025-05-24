@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             const response = await api.post('/login', { email, password });
             const { token, user } = response.data;
 
-            if (token && user) {
+            if (token) {
                 await AsyncStorage.setItem('token', token);
                 setUserToken(token);
                 setUser(user);
