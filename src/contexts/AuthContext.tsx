@@ -33,5 +33,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     // Logout logic
     const logout = async () => {
+        try {
+            await AsyncStorage.removeItem('token');
+            setUserToken(null);
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
+
+    // Load token 
+    const loadToken = async () => {
     };
 };
