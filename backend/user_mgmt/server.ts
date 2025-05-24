@@ -164,9 +164,18 @@ const uploadHandler: RequestHandler = async (req, res) => {
     res.status(400).json({ error: 'No file uploaded!' });
     return;
   }
-
+  
   try {
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        profilePicture: `/uploads/${req.file.filename}`,
+      },
+    });
+    res.status(200).json({ message: 'Profile picture uploaded successfully!' });
   } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to update user profile picture' });
   }
 }
 
