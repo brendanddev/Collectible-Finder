@@ -48,6 +48,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             if (token) setUserToken(token);
         } catch (error) {
             console.error('Load token error:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
