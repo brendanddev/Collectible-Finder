@@ -31,13 +31,15 @@ if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
 
 // Storage engine
 const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => {
+    cb(null, uploadDir);
+  }, 
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `profile_${Date.now()}${ext}`);
+  }
 });
-
-
-
-
-
-
+const upload = multer({ storage });
 
 
 // Register route
@@ -56,7 +58,7 @@ const registerHandler: RequestHandler = async (req, res) => {
   // Validate username
   if (!usernameRegex.test(username)) {
     res.status(400).json({
-      erro: 'Username must start with a letter, and contain only letters, numbers, or underscores. Length must be 3-20 characters.'
+      error: 'Username must start with a letter, and contain only letters, numbers, or underscores. Length must be 3-20 characters.'
     });
     return;
   }
@@ -154,6 +156,19 @@ app.post('/login', loginHandler);
 // Logout route
 app.post('/logout', (req, res) => {
 });
+
+// Upload profile picture route
+const uploadHandler: RequestHandler = async (req, res) => {
+  const userId = parseInt(req.params.userId, 10);
+  if (!req.file) {
+    res.status(400).json({ error: 'No file uploaded!' });
+    return;
+  }
+
+  try {
+  } catch (error) {
+  }
+}
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
