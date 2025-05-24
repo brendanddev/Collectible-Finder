@@ -18,10 +18,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [error, setError] = useState<string | null>(null);
 
     // Registration logic
-    const register = async (email: string, password: string) => {
+    const register = async (name: string, username: string, email: string, password: string) => {
         try {
             setError(null);
-            const response = await api.post('/register', { email, password });
+            const response = await api.post('/register', { name, username, email, password });
             const { userId } = response.data;
             
             if (userId) {
