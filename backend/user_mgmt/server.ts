@@ -2,6 +2,7 @@
 /**
  * @file server.ts
  * @author Brendan Dileo, May 2025
+ * The user management system for the app.
  */
 
 import express from 'express';
@@ -27,6 +28,32 @@ const registerHandler: RequestHandler = async (req, res) => {
 
   if (!name || !username || !email || !password) {
     res.status(400).json({ error: 'The following fields are required: email, password, name, username' });
+    return;
+  }
+
+  const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_]{2,19}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{9,}$/;
+
+  // Validate username
+  if (!usernameRegex.test(username)) {
+    res.status(400).json({
+      erro: 'Username must start with a letter, and contain only letters, numbers, or underscores. Length must be 3-20 characters.'
+    });
+    return;
+  }
+
+  // Validate email
+  if (!emailRegex.test(email)) {
+    res.status(400).json({ error: 'Invalid email format.' });
+    return;
+  }
+
+  // Validate password
+  if (!passwordRegex.test(password)) {
+    res.status(400).json({ 
+      error: 'Password must be atleast 9 characters long and include a lowercase letter, uppercase letter, number, and special character.' 
+    });
     return;
   }
 
