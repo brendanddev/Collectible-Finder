@@ -63,6 +63,7 @@ export type UserData = {
     name: string;
     username: string;
     email: string;
+    profilePicture?: string;
 };
 
 export type AuthContextType = {

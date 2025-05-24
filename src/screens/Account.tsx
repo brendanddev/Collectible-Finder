@@ -13,6 +13,7 @@ import useLoadFonts from '../hooks/loadFonts';
 import accountStyles from '../styles/accountStyles';
 import Login from './Login';
 import CreateAccount from './CreateAccount';
+import { config } from '../config';
 
 const Account = () => {
   const fontsLoaded = useLoadFonts();
@@ -59,10 +60,16 @@ const Account = () => {
         </Text>
 
         <View style={accountStyles.profileSection}>
+          
           <Image
-            source={require('../assets/images/user.png')}
+            source={
+              user?.profilePicture
+              ? { uri: `${config.API_BASE_URL}${user.profilePicture}` }
+              : require('../assets/images/user.png')
+            }
             style={accountStyles.profileImage}
           />
+
           <Text style={[accountStyles.name, { fontFamily: 'Comic Font 2' }]}>
             {user?.name ?? 'Collector Name'}
           </Text>
