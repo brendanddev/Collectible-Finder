@@ -1,7 +1,16 @@
-# Collectible-Finder
+# Collectible-Finder 2.0.0
 This project initially began as a passion project built with React Native and Expo SDK. 
 
 ## Features
+- AsyncStorage
+- Bottom Tabs
+- Expo Camera
+- Expo Image Picker
+- Expo Location
+- Expo Notifications
+- React Native Gesture Handler
+- React Native Maps
+- Prisma Client
 
 
 ### Assets and Attribution
