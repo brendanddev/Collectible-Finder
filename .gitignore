@@ -1,4 +1,10 @@
 
+# Temporarily ignore all .jpg, .png files, or .img files
+*.jpg
+*.png 
+*.img
+
+
 # Configuration for dev environment
 config.ts
 
