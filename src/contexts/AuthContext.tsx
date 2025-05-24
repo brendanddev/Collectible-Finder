@@ -6,7 +6,32 @@
  */
 
 import { createContext, useState } from 'react';
+import { AuthContextType, AuthProviderProps } from '../types/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../utils/api';
-import { AuthContextType } from '../types/types';
 
 const AuthContext = createContext<AuthContextType | null>(null);
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+    const [userToken, setUserToken] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    // Login logic
+    const login = async (email: string, password: string) => {
+        try {
+            const response = await api.post('/login', { email, password });
+            const { token } = response.data;
+
+            if (token) {
+                await AsyncStorage.setItem('token', token);
+                setUserToken(token);
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+        }
+    }
+
+    // Logout logic
+    const logout = async () => {
+    };
+};

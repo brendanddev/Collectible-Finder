@@ -65,4 +65,8 @@ export type AuthContextType = {
     loading: boolean;
 };
 
+export type AuthProviderProps = {
+    children: React.ReactNode;
+};
+
 
