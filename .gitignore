@@ -1,4 +1,7 @@
 
+# Configuration for dev environment
+config.ts
+
 # Local Sqlite db and log
 dev.db
 dev.db-journal
