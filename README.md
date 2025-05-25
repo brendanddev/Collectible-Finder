@@ -1,6 +1,7 @@
 # Collectible-Finder 2.0.0
 This project initially began as a passion project built with React Native and Expo SDK. 
 
+
 ## Features
 - AsyncStorage
 - Bottom Tabs
@@ -11,6 +12,13 @@ This project initially began as a passion project built with React Native and Ex
 - React Native Gesture Handler
 - React Native Maps
 - Prisma Client
+
+
+## Versions
+
+| Version | Date       | Highlights |
+|--------:|:-----------|:-----------|
+| `1.0.0` | March 2025 | Collectible Finder, made with React Native and Expo SDK allows the user to locate nearby collectible shops, store a virtual collection, and much more.|
 
 
 ### Assets and Attribution
