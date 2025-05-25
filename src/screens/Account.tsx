@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, ActivityIndicator, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../contexts/AuthContext';
 import useLoadFonts from '../hooks/loadFonts';
@@ -19,8 +19,84 @@ import * as FileSystem from 'expo-file-system';
 
 const Account = () => {
   const fontsLoaded = useLoadFonts();
-  const { userToken, logout, user } = useAuth();
+  const { userToken, logout, user, updateUser } = useAuth();
   const [showLogin, setShowLogin] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const pickImage = async () => {
+    try {
+      // Request permission
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission needed', 'Please grant permission to access your photos');
+        return;
+      }
+
+      // Pick the image
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.5, // Reduced quality for smaller file size
+        base64: false,
+      });
+
+      if (!result.canceled && result.assets[0]) {
+        await uploadImage(result.assets[0].uri);
+      }
+    } catch (error: any) {
+      console.error('Error picking image:', error);
+      Alert.alert('Error', 'Failed to pick image');
+    }
+  };
+
+  const uploadImage = async (uri: string) => {
+    try {
+      setIsUploading(true);
+
+      // Create form data
+      const formData = new FormData();
+      formData.append('profilePicture', {
+        uri,
+        type: 'image/jpeg',
+        name: 'profile.jpg',
+      } as any);
+
+      // Upload to server
+      const response = await fetch(`${config.API_BASE_URL}/api/users/upload-profile-picture/${user?.id}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+        },
+        body: formData,
+      });
+
+      console.log('Response status:', response.status);
+      const responseText = await response.text();
+      console.log('Response text:', responseText);
+
+      if (!response.ok) {
+        throw new Error(`Failed to upload image: ${response.status} ${responseText}`);
+      }
+
+      const data = JSON.parse(responseText);
+      
+      // Update user context with new profile picture
+      if (updateUser && user) {
+        updateUser({
+          ...user,
+          profilePicture: `/uploads/${data.filename}`,
+        });
+      }
+
+      Alert.alert('Success', 'Profile picture updated successfully');
+    } catch (error: any) {
+      console.error('Error uploading image:', error);
+      Alert.alert('Error', `Failed to upload profile picture: ${error.message}`);
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   if (!fontsLoaded) return <ActivityIndicator size="large" color="#0000ff" />
 
@@ -74,8 +150,14 @@ const Account = () => {
 
           <TouchableOpacity
             style={accountStyles.changeProfPictureButton}
+            onPress={pickImage}
+            disabled={isUploading}
           >
-            <Ionicons name="camera" size={20} color="#fff" />
+            {isUploading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Ionicons name="camera" size={20} color="#fff" />
+            )}
           </TouchableOpacity>
 
           <Text style={[accountStyles.name, { fontFamily: 'Comic Font 2' }]}>

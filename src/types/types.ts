@@ -70,6 +70,7 @@ export type AuthContextType = {
     userToken: string | null;
     user: UserData | null;
     setUser: (user: UserData | null) => void;
+    updateUser: (user: UserData) => void;
     login: (email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
     register: (name: string, username: string, email: string, password: string) => Promise<void>;
