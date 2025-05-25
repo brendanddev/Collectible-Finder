@@ -62,8 +62,11 @@ const Account = () => {
         name: 'profile.jpg',
       } as any);
 
+      console.log('Uploading to:', `${config.API_BASE_URL}/upload-profile-picture/${user?.id}`);
+      console.log('FormData:', formData);
+
       // Upload to server
-      const response = await fetch(`${config.API_BASE_URL}/api/users/upload-profile-picture/${user?.id}`, {
+      const response = await fetch(`${config.API_BASE_URL}/upload-profile-picture/${user?.id}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${userToken}`,
