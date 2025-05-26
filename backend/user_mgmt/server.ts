@@ -48,7 +48,6 @@ const upload = multer({
   }
 });
 
-
 // Register route
 const registerHandler: RequestHandler = async (req, res) => {
   const { name, username, email, password } = req.body;
@@ -194,6 +193,13 @@ const uploadHandler = async (
   }
 };
 app.post('/upload-profile-picture/:userId', upload.single('profilePicture'), uploadHandler);
+
+// Update user stats route
+const updateUserStatsHandler: RequestHandler = async (req, res) => {
+  const userId = parseInt(req.params.userId, 10);
+
+}
+app.post('/update-user-stats/:userId', updateUserStatsHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
