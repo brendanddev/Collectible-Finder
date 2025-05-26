@@ -22,15 +22,16 @@ model User {
   password          String
   profilePicture    String?
   createdAt         DateTime @default(now())
+  UserStats         UserStats?
 }
 
 model UserStats {
-  id                Int
-  userId            Int
-  user              User
+  id                Int       @id @default(autoincrement())
+  userId            Int       @unique
+  user              User      @relation(fields: [userId], references: [id])
 
-  photoCount        Int
-  favoriteCount     Int
-  visitedCount      Int
+  photoCount        Int       @default(0)
+  favoriteCount     Int       @default(0)
+  visitedCount      Int       @default(0)
 }
 
