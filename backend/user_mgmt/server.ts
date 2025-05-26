@@ -195,10 +195,44 @@ const uploadHandler = async (
 app.post('/upload-profile-picture/:userId', upload.single('profilePicture'), uploadHandler);
 
 // Update user stats route
-const updateUserStatsHandler: RequestHandler = async (req, res) => {
+const updateUserStatsHandler = async (req: Request, res: Response) => {
   const userId = parseInt(req.params.userId, 10);
+  const { photoCount, favoriteCount, visitedCount } = req.body;
 
-}
+  if (isNaN(userId)) {
+    return res.status(400).json({ error: 'Invalid User ID' });
+  }
+
+  try {
+    const existingStats = await prisma.userStats.findUnique({
+      where: { userId }
+    });
+
+    if (existingStats) {
+      await prisma.userStats.update({
+        where: { userId },
+        data: {
+          photoCount,
+          favoriteCount,
+          visitedCount,
+        },
+      });
+    } else {
+      await prisma.userStats.create({
+        data: {
+          userId,
+          photoCount,
+          favoriteCount,
+          visitedCount,
+        },
+      });
+    }
+    res.status(200).json({ message: 'User stats updated successfully.' });
+  } catch (error) {
+    console.error('Error updating user stats:', error);
+    res.status(500).json({ error: 'Failed to update user stats.' });
+  }
+};
 app.post('/update-user-stats/:userId', updateUserStatsHandler);
 
 app.listen(PORT, () => {
