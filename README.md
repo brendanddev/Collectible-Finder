@@ -13,6 +13,22 @@ This project initially began as a passion project built with React Native and Ex
 - React Native Maps
 - Prisma Client
 
+## Usage
+- Locate Local Collectible Shops
+    - Filter Shops by your Preferences
+    - Mark Shops as Favorites
+    - Mark Shops as Visited
+- Your very own Virtual Collection
+    - Store Images in your Virtual Collection
+    - Capture Images to Store in Collection
+    - Upload Images to Store in Collection
+    - Delete Images from your Collection
+- User Management System
+    - Create an Account
+    - Sign or Sign-out of your Account
+    - User Management System
+    - Upload Custom Profile Pictures
+
 
 ## Versions
 
