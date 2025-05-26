@@ -23,3 +23,14 @@ model User {
   profilePicture    String?
   createdAt         DateTime @default(now())
 }
+
+model UserStats {
+  id                Int
+  userId            Int
+  user              User
+
+  photoCount        Int
+  favoriteCount     Int
+  visitedCount      Int
+}
+
